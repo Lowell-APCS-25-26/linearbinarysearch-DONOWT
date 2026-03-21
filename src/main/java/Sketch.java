@@ -1,4 +1,4 @@
-public class Sketch {
+   public class Sketch {
   //see Item.java for class definition
   private Item[] store = 
     {
@@ -32,17 +32,35 @@ public class Sketch {
     return -1;
   }
   public int recursiveLinearSearch(int catNumToFind, int startIndex){
-    if (startIndex > store.length) return -1;
-    if (store[start].getCatNum()==catNumToFind) {
-      return store[start].getInventory();
+    if (startIndex == store.length) return -1;
+    if (store[startIndex].getCatNum()==catNumToFind) {
+      return store[startIndex].getInventory();
     }
+    return recursiveLinearSearch(catNumToFind, startIndex+1);
   }
   public int binarySearch(int catNumToFind){
-    //complete this method    
+    int low = 0;
+    int high = store.length - 1;
+    while (low <= high) {
+      int mid = (low + high) / 2;
+      int guess = store[mid].getCatNum();
+      if (guess == catNumToFind) {return store[mid].getInventory();} 
+      else if (guess > catNumToFind) {high = mid - 1;}
+      else {low = mid + 1;}
+    }
     return -1;
   }
   public int recursiveBinarySearch(int catNumToFind, int nLow, int nHigh){
-    //complete this method    
+    int guess = (nLow + nHigh)/2;
+    if (nLow > nHigh) {
+      return -1;
+    }
+    if (store[guess].getCatNum() == catNumToFind) {return store[guess].getInventory();}
+    else if (store[guess].getCatNum() > catNumToFind) {
+      return recursiveBinarySearch(catNumToFind, nLow, guess-1);
+    } else if (store[guess].getCatNum() < catNumToFind) {
+      return recursiveBinarySearch(catNumToFind, guess+1, nHigh);
+    } 
     return -1;
   }
   public void tester(){
